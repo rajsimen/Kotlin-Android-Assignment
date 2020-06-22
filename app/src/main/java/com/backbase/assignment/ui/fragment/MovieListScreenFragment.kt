@@ -13,10 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
-import com.backbase.assignment.ui.MainActivity
-import com.backbase.assignment.ui.MovieDetailListener
-import com.backbase.assignment.ui.MoviePresenter
-import com.backbase.assignment.ui.MovieResultViewListener
+import com.backbase.assignment.ui.*
 import com.backbase.assignment.ui.model.MovieDetails
 import com.backbase.assignment.ui.model.PlayingMovies
 import com.backbase.assignment.ui.model.PopularMovies
@@ -26,6 +23,7 @@ import com.backbase.assignment.ui.other.Constants
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -37,6 +35,7 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
     private lateinit var moviesAdapter: MoviesAdapter
     private lateinit var recyclerView: RecyclerView
     private var mCompositeDisposable: CompositeDisposable? = null
+    private var moviePresenter:MoviePresenter?=null
     private var progressBar : ProgressBar?= null
     private var footProgressBar : ProgressBar?= null
     private val PAGE_START = 1
@@ -44,6 +43,7 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
     private var isLastPage = false
     private var TOTAL_PAGES = 1
     private var currentPage = PAGE_START
+
 
     companion object {
         fun newInstance(): MovieListScreenFragment =
@@ -53,6 +53,8 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mCompositeDisposable = CompositeDisposable()
+        moviePresenter = MoviePresenter(SchedulerProvider,this,ApiService.buildService())
+
 
     }
 
@@ -112,14 +114,32 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
         Log.e("ERROR",message)
     }
 
+    override fun getPopularMovieList(popularMovies: PopularMovies) {
+        setUpThePopularMovieList(popularMovies)
+    }
+
+    override fun getMorePopularMovieList(popularMovies: PopularMovies) {
+        getLoadMoreItems(popularMovies)
+    }
+
+    override fun getPlayingMovieList(playingMovies: PlayingMovies) {
+        setUpThePlayingMovieList(playingMovies)
+    }
+
+    override fun getMovieDetail(movieDetails: MovieDetails) {
+        setUpTheMovieDetail(movieDetails)
+    }
+
     fun getMoreItems() {
 
         Log.d("TOTALPAGE",currentPage.toString())
-        mCompositeDisposable?.add(
-            ApiService.buildService().getPopularMovieListResponse(Constants.API_KEY,currentPage.toString())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({response -> getLoadMoreItems(response)}, {t -> onFailure(t) }))
+//        mCompositeDisposable?.add(
+//            ApiService.buildService().getPopularMovieListResponse(Constants.API_KEY,currentPage.toString())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe({response -> getLoadMoreItems(response)}, {t -> onFailure(t) }))
+
+        moviePresenter!!.getMorePopularMovieList(Constants.API_KEY,currentPage.toString())
 
     }
 
@@ -135,19 +155,21 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
 
     private fun fetchMovies() {
         progressBar?.progress = View.VISIBLE
-        mCompositeDisposable?.add(
-            ApiService.buildService().getPopularMovieListResponse(Constants.API_KEY,currentPage.toString())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({response -> setUpThePopularMovieList(response)}, {t -> onFailure(t) }))
+//        mCompositeDisposable?.add(
+//            ApiService.buildService().getPopularMovieListResponse(Constants.API_KEY,currentPage.toString())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe({response -> setUpThePopularMovieList(response)}, {t -> onFailure(t) }))
+//
+//        mCompositeDisposable?.add(
+//            ApiService.buildService().getPlayingMovieListResponse(Constants.API_KEY)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe({response -> setUpThePlayingMovieList(response)}, {t -> onFailure(t) }))
 
-        mCompositeDisposable?.add(
-            ApiService.buildService().getPlayingMovieListResponse(Constants.API_KEY)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({response -> setUpThePlayingMovieList(response)}, {t -> onFailure(t) }))
 
-
+        moviePresenter!!.getPopularMovieList(Constants.API_KEY,currentPage.toString())
+        moviePresenter!!.getPlayingMovieList(Constants.API_KEY)
 
     }
 
@@ -258,12 +280,14 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
 
     override fun getMovieDetail(id: Int) {
         progressBar?.visibility = View.VISIBLE
-        Log.d("ITEMID",id.toString())
-        mCompositeDisposable?.add(
-            ApiService.buildService().getMovieDetaisResponse(id.toString(),Constants.API_KEY)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({response -> setUpTheMovieDetail(response)}, {t -> onFailure(t) }))
+//        Log.d("ITEMID",id.toString())
+//        mCompositeDisposable?.add(
+//            ApiService.buildService().getMovieDetaisResponse(id.toString(),Constants.API_KEY)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe({response -> setUpTheMovieDetail(response)}, {t -> onFailure(t) }))
+
+        moviePresenter!!.getMovieDetails(id.toString(),Constants.API_KEY)
     }
 
 

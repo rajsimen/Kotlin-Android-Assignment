@@ -1,5 +1,6 @@
 package com.backbase.assignment.ui
 
+import androidx.annotation.Nullable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -11,7 +12,11 @@ interface BaseSchedulerProvider {
     fun ui(): Scheduler
 }
 
-class SchedulerProvider : BaseSchedulerProvider {
+object SchedulerProvider : BaseSchedulerProvider {
+
+    init {
+
+    }
     override fun computation() = Schedulers.computation()
     override fun ui() = AndroidSchedulers.mainThread()
     override fun io() = Schedulers.io()

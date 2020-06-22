@@ -37,8 +37,9 @@ class ExampleUnitTest {
         val presenter = MoviePresenter(schedulerProvider, view, service)
         BDDMockito.given(service.getSomeRemoteData()).willReturn(Single.just(5))
 
+
         //when
-        presenter.getMovieDetails()
+        presenter.getMovieDetails("112","XYCBDJJ")
 
         //then
         BDDMockito.then(view).should().showData(5)
