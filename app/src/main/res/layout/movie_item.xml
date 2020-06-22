@@ -4,25 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/listBg">
 
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="47dp"
+        android:layout_height="71dp"
+        android:layout_margin="@dimen/dp16"
+        android:background="@drawable/layout_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:elevation="2dp"
+         />
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textColor="@color/normalText"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintStart_toEndOf="@+id/poster"
         app:layout_constraintTop_toTopOf="@+id/poster"
         tools:text="Title" />
@@ -32,16 +37,68 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:textColor="@color/normalText"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="April 12, 2019" />
 
     <com.backbase.assignment.ui.custom.RatingView
         android:id="@+id/rating"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
+        android:progress="7"
+        android:max="150"
+        android:indeterminate="false"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/circle_progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/percentage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:text="12"
+        android:textSize="11sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/normalText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+<!--    <ProgressBar-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        style="@android:style/Widget.ProgressBar.Horizontal"-->
+<!--        android:progressDrawable="@drawable/circle_progress_bar"-->
+<!--        android:background="@drawable/circle_shape"-->
+<!--        android:progress="30"-->
+<!--        android:secondaryProgress="0"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:max="100"-->
+<!--        android:indeterminate="false"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+        <View
+            android:id="@+id/view_purchase_confirmation_header_divider"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="25dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

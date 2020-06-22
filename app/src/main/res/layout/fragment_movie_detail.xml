@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/dp33"
+    android:paddingRight="@dimen/dp33"
+    android:paddingTop="6dp"
+    android:background="@color/transparent_black">
+
+
+    <ImageView
+        android:id="@+id/moviePosterImageView"
+        android:layout_width="@dimen/dp135"
+        android:layout_height="@dimen/dp201"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/movieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="@dimen/sp16"
+        android:textStyle="bold"
+        android:textColor="@color/normalText"
+        app:layout_constraintTop_toBottomOf="@+id/moviePosterImageView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dp6"/>
+
+    <TextView
+        android:id="@+id/releaseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/normalText"
+        android:textSize="@dimen/sp16"
+        app:layout_constraintTop_toBottomOf="@+id/movieTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dp6"/>
+
+
+    <TextView
+        android:id="@+id/movieOverViewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Overview"
+        android:textSize="@dimen/sp16"
+        android:textStyle="bold"
+        android:textColor="@color/normalText"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dp20"/>
+
+    <TextView
+        android:id="@+id/moviewDescp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/normalText"
+        android:textSize="@dimen/sp16"
+        app:layout_constraintTop_toBottomOf="@+id/movieOverViewText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dp20"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginBottom="@dimen/dp20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moviewDescp"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
