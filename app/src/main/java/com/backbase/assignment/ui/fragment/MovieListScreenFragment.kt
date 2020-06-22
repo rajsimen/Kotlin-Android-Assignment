@@ -37,7 +37,6 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
     private var mCompositeDisposable: CompositeDisposable? = null
     private var moviePresenter:MoviePresenter?=null
     private var progressBar : ProgressBar?= null
-    private var footProgressBar : ProgressBar?= null
     private val PAGE_START = 1
     private var isLoading = false
     private var isLastPage = false
@@ -133,11 +132,6 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
     fun getMoreItems() {
 
         Log.d("TOTALPAGE",currentPage.toString())
-//        mCompositeDisposable?.add(
-//            ApiService.buildService().getPopularMovieListResponse(Constants.API_KEY,currentPage.toString())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe({response -> getLoadMoreItems(response)}, {t -> onFailure(t) }))
 
         moviePresenter!!.getMorePopularMovieList(Constants.API_KEY,currentPage.toString())
 
@@ -155,19 +149,6 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
 
     private fun fetchMovies() {
         progressBar?.progress = View.VISIBLE
-//        mCompositeDisposable?.add(
-//            ApiService.buildService().getPopularMovieListResponse(Constants.API_KEY,currentPage.toString())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe({response -> setUpThePopularMovieList(response)}, {t -> onFailure(t) }))
-//
-//        mCompositeDisposable?.add(
-//            ApiService.buildService().getPlayingMovieListResponse(Constants.API_KEY)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe({response -> setUpThePlayingMovieList(response)}, {t -> onFailure(t) }))
-
-
         moviePresenter!!.getPopularMovieList(Constants.API_KEY,currentPage.toString())
         moviePresenter!!.getPlayingMovieList(Constants.API_KEY)
 
@@ -273,20 +254,8 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
 
     }
 
-    private fun onFailure(t: Throwable) {
-        progressBar?.visibility = View.GONE
-        Log.e("ERROR",t.message)
-    }
-
     override fun getMovieDetail(id: Int) {
         progressBar?.visibility = View.VISIBLE
-//        Log.d("ITEMID",id.toString())
-//        mCompositeDisposable?.add(
-//            ApiService.buildService().getMovieDetaisResponse(id.toString(),Constants.API_KEY)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe({response -> setUpTheMovieDetail(response)}, {t -> onFailure(t) }))
-
         moviePresenter!!.getMovieDetails(id.toString(),Constants.API_KEY)
     }
 
@@ -307,7 +276,7 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
             if (!isLoading() && !isLastPage()) {
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     loadMoreItems()
-                }//                    && totalItemCount >= ClothesFragment.itemsCount
+                }
             }
         }
         abstract fun loadMoreItems()

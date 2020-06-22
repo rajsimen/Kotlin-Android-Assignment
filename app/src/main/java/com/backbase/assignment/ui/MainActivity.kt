@@ -2,6 +2,8 @@ package com.backbase.assignment.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
@@ -11,6 +13,7 @@ import com.backbase.assignment.ui.fragment.MovieListScreenFragment
 import com.backbase.assignment.ui.model.MovieDetails
 import com.backbase.assignment.ui.other.Constants
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.layout_base.*
 
 
 class MainActivity : BaseActivity() {
@@ -63,7 +66,9 @@ class MainActivity : BaseActivity() {
                 assert(
                     supportActionBar != null //null check
                 )
+                supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#9f000000")))
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                toolbar_title.text=""
                 mFragment = MovieDetailScreenFragment.newInstance(movieDetails)
             }
         }
