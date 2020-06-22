@@ -95,16 +95,16 @@ class MoviesAdapter(mContext: Context, mMovieDetailListener: MovieDetailListener
             Glide.with(itemView.context).load("https://image.tmdb.org/t/p/original/"+result.poster_path)
                 .placeholder(context!!.getDrawable(R.drawable.normal_progress_bar))
                 .into(itemView.poster)
-            Log.d("URL","https://image.tmdb.org/t/p/original/"+result.poster_path)
+//            Log.d("URL","https://image.tmdb.org/t/p/original/"+result.poster_path)
             rating.progress = result.vote_average.toString().replace(".","").toInt()
             percentage.text = result.vote_average.toString().replace(".","")+"%"
 
-            if (Math.round(result.vote_average).toInt()>5) {
-                rating.progressDrawable =
-                    context!!.getDrawable(R.drawable.circle_progress_bar)
-            }else{
+            if (result.vote_average.toString().replace(".","").toInt()<50) {
                 rating.progressDrawable =
                     context!!.getDrawable(R.drawable.circle_progress_bar_yellow)
+            }else{
+                rating.progressDrawable =
+                    context!!.getDrawable(R.drawable.circle_progress_bar)
             }
 
 //            Glide.with(itemView.context)
@@ -182,7 +182,7 @@ class MoviesAdapter(mContext: Context, mMovieDetailListener: MovieDetailListener
 
     fun removeLoadingFooter() {
         isLoadingAdded = false
-        val position = listOfMovies!!.size
+        val position = listOfMovies!!.size-1
         val item = getItem(position)
         if (item != null) {
             listOfMovies!!.removeAt(position)
@@ -191,7 +191,7 @@ class MoviesAdapter(mContext: Context, mMovieDetailListener: MovieDetailListener
     }
     fun add(result: Result) {
         listOfMovies!!.add(result)
-        notifyItemInserted(listOfMovies!!.size-1)
+        notifyItemInserted(listOfMovies!!.size)
     }
 
     fun getItem(position: Int): Result {

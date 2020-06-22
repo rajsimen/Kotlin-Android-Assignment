@@ -138,9 +138,6 @@ class MovieListScreenFragment : Fragment(),MovieDetailListener,MovieResultViewLi
     }
 
     private fun getLoadMoreItems(popularMovies: PopularMovies){
-        isLoading = false
-        moviesAdapter.setPopularMovieList(popularMovies.results)
-
         moviesAdapter.removeLoadingFooter()
         isLoading = false
         moviesAdapter.setPopularMovieList(popularMovies.results)
